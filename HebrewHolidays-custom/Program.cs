@@ -29,6 +29,16 @@ namespace HebrewHolidays_custom
                     hebrew = "ערב " + item.hebrew
                 });
             }
+            //get only chars from item.hebrew
+            list.ForEach(x => x.hebrew = new string(x.hebrew.Where(c => char.IsLetter(c) || char.IsSeparator(c)).ToArray()));
+
+            var output = "";
+            foreach (var item in list)
+            {
+                output += item.hebrew + "," + item.date.ToString("dd/MM/yyyy") + "," + (item.hebrew.Contains("ערב") ? "true" : "false") + Environment.NewLine;
+            }
+
+            File.WriteAllText("holidays.csv", output);
         }
     }
 
